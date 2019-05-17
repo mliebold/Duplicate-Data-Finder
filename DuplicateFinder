@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Sep 28 20:36:56 2018
+
+@author: mikeliebold
+"""
+
+#Import Excel spreadsheet library
+import xlrd
+
+#Stores location of files to be searched
+loc1 = ('/Users/mikeliebold/Desktop/Python Projects/DuplicateFinder2/Test.xlsx')
+loc2 = ('/Users/mikeliebold/Desktop/Python Projects/DuplicateFinder2/Test2.xlsx')
+
+#Opens workbooks
+wb1 = xlrd.open_workbook(loc1)
+wb2 = xlrd.open_workbook(loc2)
+
+#Opens sheet
+sheet1 = wb1.sheet_by_index(0)
+sheet2 = wb2.sheet_by_index(0)
+
+#Row 1, Column 1
+sheet1.cell_value(0, 0)
+sheet2.cell_value(0, 0)
+
+#Will Store Sheet1 FirstName, LastName and Address Locations
+s1fnc = 0
+s1lnc = 0
+s1ac = 0
+
+#Will Store Sheet2 FirstName, LastName and Address Locations
+s2fnc = 0
+s2lnc = 0
+s2ac = 0
+
+# Finds and stores proper locations
+for i in range(sheet1.ncols):
+    if(sheet1.cell_value(0, i) == 'First Name'):
+        s1fnc = i
+    elif(sheet1.cell_value(0, i) == 'Last Name'):
+        s1lnc = i
+    elif(sheet1.cell_value(0, i) == 'Address'):
+        s1ac = i
+        
+for i in range(sheet2.ncols):
+    if(sheet2.cell_value(0, i) == 'First Name'):
+        s2fnc = i
+    elif(sheet2.cell_value(0, i) == 'Last Name'):
+        s2lnc = i
+    elif(sheet2.cell_value(0, i) == 'Address'):
+        s2ac = i
+        
+#Row 1, Column 1
+sheet1.cell_value(0, 0)
+sheet2.cell_value(0, 0)
+
+# Compare Address' and print out the duplicates
+for i in range(sheet1.nrows):
+    for j in range(sheet2.nrows):
+        if(sheet1.cell_value(i, s1ac) == (sheet2.cell_value(j, s2ac))):
+            print(sheet1.cell_value(i, s1fnc), sheet1.cell_value(i, s1lnc), sheet1.cell_value(i, s1ac))
+        
+        
